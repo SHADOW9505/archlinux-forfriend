@@ -46,16 +46,16 @@ For the sake of simplicity, run
 
     cfdisk /dev/sda
 
-Inside the GUI, DELETE ALL of the partitions inside, by selecting the partition and pressing delete. 
+Inside the GUI, DELETE ALL of the partitions inside, by `selecting the partition and pressing Delete`. 
 Once you have deleted everything, you may create your first and most important partition.
-Press “new” (or “create”, I forgot)
-Type in 2G (for 2 gigabytes of your EFI/Boot)
-Once you have created that, press “type” and scroll all the way up and choose “EFI system” (or whatever, it will say EFI)
+Press `New`
+Type in `2G` (for 2 gigabytes of your EFI/Boot)
+Once you have created that, press `Type` and `scroll all the way up` and choose `“EFI system”` (or whatever, it will say EFI)
 
-For the rest of your storage, just press “new” again and press enter this time, assuming you want ONE main partition only. 
+For the rest of your storage, just press `New` again and press `Enter (key)` this time, assuming you want ONE main partition only. 
 You do not have to change the filesystem for this. 
 
-Press WRITE, type “yes”, and press exit.
+Press `Write`, `type “yes”`, and press `exit`.
 
 
 Now, confirm that you are happy with your partitions by running 
