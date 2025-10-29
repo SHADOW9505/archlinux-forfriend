@@ -82,7 +82,7 @@ make a directory AND mount your boot at the same time:
     mount —mkdir /dev/sda1 /mnt/boot
 
 
-INSTALLATION 1
+# INSTALLATION 1
 
 to explain what happened right now, is that you essentially prepared your drives for the installation of linux itself. Everything before now was just the hardware part, now we’re getting into installing Linux itself. 
 REMEMBER: never shut down your system at this point, since your drives are mounted. Whenever your drives are mounted, they are in use. If you force shutdown when they are mounted you WILL corrupt the drives (personal experience). ALWAYS umount before doing something with the drives such as servicing them or shutting down. In the actual complete system itself, the drives will umount automatically, whenever you run “shutdown” or “reboot”. It is heavily advised against to force shutdown.
@@ -120,7 +120,7 @@ After that finishes, run
     genfstab -U /mnt > /mnt/etc/fstab
 
 
-INSTALLATION 2
+# INSTALLATION 2
 
 Now that you have installed your bare bones operating system, you will run it in the most super user mode ever. Although it is also ran in “safe mode”, aka programs and stuff do NOT work in chroot, apart from text editors. 
 
@@ -246,7 +246,7 @@ then run
     pacman -Syu
 
 
-INSTALLATION 3
+# INSTALLATION 3
 
 We have now finished installing and configuring system settings. Now you can safely start installing and enabling packages. Here, I will list all of the packages that you will want (you yourself wanted all kde-applications and the full plasma experience)
 
@@ -267,11 +267,10 @@ now you will be met with a shit ton of choices to install. (I don’t know what 
 after everything installs, run these two commands:
 
     systemctl enable sddm
-
     systemctl enable NetworkManager
 
 
-FINALIZATION
+# FINALIZATION
 
     exit
     umount -R /mnt
