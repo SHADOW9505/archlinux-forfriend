@@ -15,4 +15,4 @@ the live ISO (of course you did)
 
 To check your internet connection,
 ping the archlinux website.
-` ping ping.archlinux.org`
+    ` ping ping.archlinux.org`
