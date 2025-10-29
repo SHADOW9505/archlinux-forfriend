@@ -106,9 +106,9 @@ I made you use only mirror, as it is Garuda linux and it can be trusted.
 Once you have done that, press 
 
     CTRL+O 
-    ENTER //(to save changes)
+    ENTER     (to save changes)
 
-    CTRL+X //(to exit)
+    CTRL+X     (to exit)
 
 
 Now you can install the essential files needed for your bare-bones system
@@ -131,7 +131,7 @@ Set up time:
 
     ln -sf /usr/share/zoneinfo/Asia/Bengaluru /etc/localtime 
 
-DISCLAIMER: I am unsure whether it is Bengaluru or Bangalore, to check which one it is, run # ls /usr/share/zoneinfo and find the correct spelling.
+**DISCLAIMER:** I am unsure whether it is Bengaluru or Bangalore, to check which one it is, run `ls /usr/share/zoneinfo` and find the correct spelling.
 
     hwclock —systohc
 
@@ -140,7 +140,7 @@ Set locale (important)
 
     nano /etc/locale.gen
 
-FIND “eng_US.UTF-8” and UNCOMMENT IT by deleting “# “
+FIND `eng_US.UTF-8` and __UNCOMMENT IT__ by deleting `#`
 
     locale-gen
 
@@ -158,20 +158,20 @@ set your hostname, its basically the name of your machine (such as DESKTOP-93746
     echo YourHostNameOfChoice > /etc/hostname
 
 
-MOVING ON TO PASSWORDS: I installed pwgen along with your pacstrap. I highly highly highly suggest you run it right now. You MUST use a good and strong password for the ROOT account, which you will not be using at all (hopefully). Try not to use the root account at ALL. Which is why we have “sudo”. 
+MOVING ON TO PASSWORDS: I installed pwgen along with your pacstrap. I *highly highly highly* suggest you run it right now. You *MUST* use a good and strong password for the ROOT account, which you will not be using at all (hopefully). **Try not to use the root account at ALL in the main system.** Which is why we have “sudo”. 
 This is how I ran pwgen:
 
     pwgen 24 -y -s 
 
-(y=special characters 
-s=secure/pure randomness)
+*(y=special characters 
+s=secure/pure randomness)*
 
 After you have picked your password, run 
 
     passwd 
 
-This will set your ROOT ACCOUNT PASSWORD. 
-Note: you cannot copy and paste in the live ISO.
+This will set your **ROOT ACCOUNT PASSWORD.** 
+**Note: you cannot copy and paste in the live ISO.*
 
 
 After you have set up root password, move on to your user account.
@@ -186,30 +186,32 @@ set a password (it can be any password you like, choose something simple but nor
 The next few steps are a bit tricky.
 
     EDITOR=nano visudo
-VERY IMPORTANT: uncomment (remove # ) %wheel ALL=(ALL:ALL) ALL 
+**VERY IMPORTANT: uncomment (remove # ) `%wheel ALL=(ALL:ALL) ALL`** 
 
 
 The next steps are going to be regarding installing and configuring software, boot loader, and drivers.
 
 Configure for the future
 
-n    ano /etc/environment
+    nano /etc/environment
 
 Add these lines somewhere in the file:
 
-QT_QPA_PLATFORMTHEME="wayland;xcb"
-GBM_BACKEND=nvidia-drm
-__GLX_VENDOR_LIBRARY_NAME=nvidia
-ENABLE_VKBASALT=1
-LIBVA_DRIVER_NAME=nvidia
+    QT_QPA_PLATFORMTHEME="wayland;xcb"
+    GBM_BACKEND=nvidia-drm
+    __GLX_VENDOR_LIBRARY_NAME=nvidia
+    ENABLE_VKBASALT=1
+    LIBVA_DRIVER_NAME=nvidia
 
 Next:
 
     nano /etc/mkinitcpio.conf
 
-you will see MODULES=(). Inside the brackets, insert 
+you will see `MODULES=()`. Inside the brackets, insert 
 
     nvidia nvidia_uvm nvidia_drm nvidia_modeset
+
+after, run
 
     mkinitcpio -P
 
@@ -222,10 +224,13 @@ install and configure bootloader (GRUB)
 
     nano /etc/default/grub
 
-In this file, you want to find the GRUB_CMDLINE_LINUX_DEFAULT=“”
+In this file, you want to find the `GRUB_CMDLINE_LINUX_DEFAULT=“”`
 
-If there is something already inside the “”, keep it, and add 
-nvidia_drm.modeset=1
+If there is something already inside the “”, **keep it**, and add 
+
+    nvidia_drm.modeset=1
+    
+after, run
 
     grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -239,7 +244,7 @@ scroll down until you find
     [multilib]
     Include = /etc/pacman.d/mirrorlist
 
-UNCOMMENT THOSE TWO LINES BY REMOVING # BEFORE BOTH OF THE LINES.
+**UNCOMMENT THOSE TWO LINES BY REMOVING # BEFORE BOTH OF THE LINES.**
 
 then run
 
@@ -253,7 +258,7 @@ We have now finished installing and configuring system settings. Now you can saf
 
     pacman -S plasma kde-applications sddm Firefox discord steam libreoffice-fresh nvidia nvidia-settings nvidia-utils networkmanager iwd git noto-fonts-cjk vlc cups gimp obs jdk-openjdk vlc-plugin-ffmpeg 
 
-now you will be met with a shit ton of choices to install. (I don’t know what order it is in, but I do know you MUST press enter for the first 2)
+now you will be met with a shit ton of choices to install. **(I don’t know what order it is in, but I do know you MUST press enter for the first 2)**
 
 1. press enter
 2. press enter
@@ -276,4 +281,4 @@ after everything installs, run these two commands:
     umount -R /mnt
     reboot
 
-congratulations, you have installed arch! now you will reboot into your main system (hopefully everything works and the linux god will bless you
+congratulations, you have installed arch! now you will reboot into your main system (hopefully everything works and the penguin god will bless you
