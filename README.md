@@ -267,6 +267,7 @@ now you will be met with a shit ton of choices to install. (I don’t know what 
 after everything installs, run these two commands:
 
     systemctl enable sddm
+    
     systemctl enable NetworkManager
 
 
