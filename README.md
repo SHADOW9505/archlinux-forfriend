@@ -60,26 +60,26 @@ Press WRITE, type “yes”, and press exit.
 
 Now, confirm that you are happy with your partitions by running 
 
-lsblk
+    lsblk
 
 (sda1 should be 2G, and sda2 should be around 900+ or something)
 You may start formatting your partitions. 
 
 TO FORMAT EFI:
 
-mkfs.vfat -F32 /dev/sda1
+    mkfs.vfat -F32 /dev/sda1
 
 FORMAT ROOT:
 
-mkfs.ext4 /dev/sda2
+    mkfs.ext4 /dev/sda2
 
 now, mount your ROOT partition FIRST (RULE OF THUMB)
 
-mount /dev/sda2 /mnt
+    mount /dev/sda2 /mnt
 
 make a directory AND mount your boot at the same time:
 
-mount —mkdir /dev/sda1 /mnt/boot
+    mount —mkdir /dev/sda1 /mnt/boot
 
 
 INSTALLATION 1
@@ -91,15 +91,15 @@ I advise you to change your pacman mirrorlist, as the automatically generated on
 
 Firstly install nano (text editor)
 
-pacstrap -K /mnt nano
+    pacstrap -K /mnt nano
 
 Then once it’s done run this command:
 
-nano /etc/pacman.d/mirrorlist
+    nano /etc/pacman.d/mirrorlist
 
 In the file, DELETE EVERYTHING, YES EVERYTHING. And inside the empty file, put 
 
-Server = https://in-mirror.garudalinux.org/archlinux/$repo/os/$arch
+    Server = https://in-mirror.garudalinux.org/archlinux/$repo/os/$arch
 
 I made you use only mirror, as it is Garuda linux and it can be trusted. 
 
@@ -113,62 +113,62 @@ CTRL+X (to exit)
 
 Now you can install the essential files needed for your bare-bones system
 
-pacstrap -K /mnt linux linux-firmware linux-headers base base-devel grub nano vim networkmanager iwd efibootmgr intel-ucode os-prober bash-completion pwgen
+    pacstrap -K /mnt linux linux-firmware linux-headers base base-devel grub nano vim networkmanager iwd efibootmgr intel-ucode os-prober bash-completion pwgen
 
 After that finishes, run
 
-genfstab -U /mnt > /mnt/etc/fstab
+    genfstab -U /mnt > /mnt/etc/fstab
 
 
 INSTALLATION 2
 
 Now that you have installed your bare bones operating system, you will run it in the most super user mode ever. Although it is also ran in “safe mode”, aka programs and stuff do NOT work in chroot, apart from text editors. 
 
-arch-chroot /mnt
+    arch-chroot /mnt
 
 
 Set up time:
 
-ln -sf /usr/share/zoneinfo/Asia/Bengaluru /etc/localtime 
+    ln -sf /usr/share/zoneinfo/Asia/Bengaluru /etc/localtime 
 
 DISCLAIMER: I am unsure whether it is Bengaluru or Bangalore, to check which one it is, run # ls /usr/share/zoneinfo and find the correct spelling.
 
-hwclock —systohc
+    hwclock —systohc
 
 
 Set locale (important)
 
-nano /etc/locale.gen
+    nano /etc/locale.gen
 
 FIND “eng_US.UTF-8” and UNCOMMENT IT by deleting “# “
 
-locale-gen
+    locale-gen
 
-nano /etc/locale.conf
+    nano /etc/locale.conf
 
 INSIDE THE FILE PUT:
 
-LANG=en_US.UTF-8
+    LANG=en_US.UTF-8
 
 
 hostname, users and passwords
 
 set your hostname, its basically the name of your machine (such as DESKTOP-93746 on windows)
 
-echo YourHostNameOfChoice > /etc/hostname
+    echo YourHostNameOfChoice > /etc/hostname
 
 
 MOVING ON TO PASSWORDS: I installed pwgen along with your pacstrap. I highly highly highly suggest you run it right now. You MUST use a good and strong password for the ROOT account, which you will not be using at all (hopefully). Try not to use the root account at ALL. Which is why we have “sudo”. 
 This is how I ran pwgen:
 
-pwgen 24 -y -s 
+    pwgen 24 -y -s 
 
 (y=special characters 
 s=secure/pure randomness)
 
 After you have picked your password, run 
 
-passwd 
+    passwd 
 
 This will set your ROOT ACCOUNT PASSWORD. 
 Note: you cannot copy and paste in the live ISO.
@@ -176,16 +176,16 @@ Note: you cannot copy and paste in the live ISO.
 
 After you have set up root password, move on to your user account.
 
-useradd -d -m -G wheel -s /bin/bash Arnav214
+    useradd -d -m -G wheel -s /bin/bash Arnav214
 
 set a password (it can be any password you like, choose something simple but normal, you’ll be typing your password a LOT)
 
-passwd Arnav214
+    passwd Arnav214
 
 
 The next few steps are a bit tricky.
 
-EDITOR=nano visudo
+    EDITOR=nano visudo
 VERY IMPORTANT: uncomment (remove # ) %wheel ALL=(ALL:ALL) ALL 
 
 
@@ -193,7 +193,7 @@ The next steps are going to be regarding installing and configuring software, bo
 
 Configure for the future
 
-nano /etc/environment
+n    ano /etc/environment
 
 Add these lines somewhere in the file:
 
@@ -205,45 +205,45 @@ LIBVA_DRIVER_NAME=nvidia
 
 Next:
 
-nano /etc/mkinitcpio.conf
+    nano /etc/mkinitcpio.conf
 
 you will see MODULES=(). Inside the brackets, insert 
 
-nvidia nvidia_uvm nvidia_drm nvidia_modeset
+    nvidia nvidia_uvm nvidia_drm nvidia_modeset
 
-mkinitcpio -P
+    mkinitcpio -P
 
 
 install and configure bootloader (GRUB)
 
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --recheck
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --recheck
 
-grub-mkconfig -o /boot/grub/grub.cfg
+    grub-mkconfig -o /boot/grub/grub.cfg
 
-nano /etc/default/grub
+    nano /etc/default/grub
 
 In this file, you want to find the GRUB_CMDLINE_LINUX_DEFAULT=“”
 
 If there is something already inside the “”, keep it, and add 
 nvidia_drm.modeset=1
 
-grub-mkconfig -o /boot/grub/grub.cfg
+    grub-mkconfig -o /boot/grub/grub.cfg
 
 
 Enable the installation of multilib packages (such as steam)
 
-nano /etc/pacman.conf
+    nano /etc/pacman.conf
 
 scroll down until you find 
 
-[multilib]
-Include = /etc/pacman.d/mirrorlist
+    [multilib]
+    Include = /etc/pacman.d/mirrorlist
 
 UNCOMMENT THOSE TWO LINES BY REMOVING # BEFORE BOTH OF THE LINES.
 
 then run
 
-pacman -Syu
+    pacman -Syu
 
 
 INSTALLATION 3
@@ -251,7 +251,7 @@ INSTALLATION 3
 We have now finished installing and configuring system settings. Now you can safely start installing and enabling packages. Here, I will list all of the packages that you will want (you yourself wanted all kde-applications and the full plasma experience)
 
 
-pacman -S plasma kde-applications sddm Firefox discord steam libreoffice-fresh nvidia nvidia-settings nvidia-utils networkmanager iwd git noto-fonts-cjk vlc cups gimp obs jdk-openjdk vlc-plugin-ffmpeg 
+    pacman -S plasma kde-applications sddm Firefox discord steam libreoffice-fresh nvidia nvidia-settings nvidia-utils networkmanager iwd git noto-fonts-cjk vlc cups gimp obs jdk-openjdk vlc-plugin-ffmpeg 
 
 now you will be met with a shit ton of choices to install. (I don’t know what order it is in, but I do know you MUST press enter for the first 2)
 
@@ -266,14 +266,14 @@ now you will be met with a shit ton of choices to install. (I don’t know what 
 
 after everything installs, run these two commands:
 
-systemctl enable sddm
-systemctl enable NetworkManager
+    systemctl enable sddm
+    systemctl enable NetworkManager
 
 
 FINALIZATION
 
-exit
-umount -R /mnt
-reboot
+    exit
+    umount -R /mnt
+    reboot
 
 congratulations, you have installed arch! now you will reboot into your main system (hopefully everything works and the linux god will bless you
