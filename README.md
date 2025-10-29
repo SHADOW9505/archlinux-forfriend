@@ -85,7 +85,7 @@ make a directory AND mount your boot at the same time:
 # INSTALLATION 1
 
 to explain what happened right now, is that you essentially prepared your drives for the installation of linux itself. Everything before now was just the hardware part, now we’re getting into installing Linux itself. 
-REMEMBER: never shut down your system at this point, since your drives are mounted. Whenever your drives are mounted, they are in use. If you force shutdown when they are mounted you WILL corrupt the drives (personal experience). ALWAYS umount before doing something with the drives such as servicing them or shutting down. In the actual complete system itself, the drives will umount automatically, whenever you run “shutdown” or “reboot”. It is heavily advised against to force shutdown.
+REMEMBER: never shut down your system at this point, since your drives are mounted. Whenever your drives are mounted, they are in use. If you force shutdown when they are mounted you WILL corrupt the drives (personal experience). ALWAYS umount before doing something with the drives such as servicing them or shutting down. In the actual complete system itself, the drives will umount automatically, whenever you run `shutdown` or `reboot`. It is heavily advised against to force shutdown.
 
 I advise you to change your pacman mirrorlist, as the automatically generated ones are DOGSHIT.
 
@@ -97,7 +97,7 @@ Then once it’s done run this command:
 
     nano /etc/pacman.d/mirrorlist
 
-In the file, DELETE EVERYTHING, YES EVERYTHING. And inside the empty file, put 
+In the file, **DELETE EVERYTHING**, YES EVERYTHING. And inside the empty file, put 
 
     Server = https://in-mirror.garudalinux.org/archlinux/$repo/os/$arch
 
@@ -105,10 +105,10 @@ I made you use only mirror, as it is Garuda linux and it can be trusted.
 
 Once you have done that, press 
 
-CTRL+O 
-ENTER (to save changes)
+    CTRL+O 
+    ENTER //(to save changes)
 
-CTRL+X (to exit)
+    CTRL+X //(to exit)
 
 
 Now you can install the essential files needed for your bare-bones system
