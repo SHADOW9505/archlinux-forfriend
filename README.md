@@ -13,4 +13,6 @@ the live ISO (of course you did)
 
 # PRE-INSTALLATION
 
-To check your internet connection, ping the archlinux website.
+To check your internet connection,
+ping the archlinux website.
+` ping ping.archlinux.org`
